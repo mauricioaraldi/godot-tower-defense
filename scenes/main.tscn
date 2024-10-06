@@ -6,20 +6,20 @@
 [ext_resource type="PackedScene" uid="uid://dxafv2hcdn3i7" path="res://assets/tile-spawn-end-round.glb" id="2_x31wm"]
 [ext_resource type="PackedScene" uid="uid://dfc0tsgea8lhe" path="res://assets/tile-corner-round.glb" id="3_eclpv"]
 [ext_resource type="PackedScene" uid="uid://2u853t6kxsqk" path="res://assets/tile-crossing.glb" id="4_rda0d"]
-[ext_resource type="PackedScene" uid="uid://d0r2838jhsgjt" path="res://assets/enemy-ufo-a.glb" id="5_sm8n6"]
 [ext_resource type="PackedScene" uid="uid://b4iq3f6pefsfp" path="res://assets/tile-tree-double.glb" id="8_tg2ur"]
 [ext_resource type="PackedScene" uid="uid://opqt14irmbh0" path="res://assets/tile-tree.glb" id="9_p6rmo"]
 [ext_resource type="PackedScene" uid="uid://dvf6iyhoq6hl7" path="res://assets/tile-rock.glb" id="10_0wrr2"]
 [ext_resource type="PackedScene" uid="uid://cxovhgrb0vi75" path="res://assets/tile-crystal.glb" id="11_g0xd7"]
+[ext_resource type="PackedScene" uid="uid://dytvgccj1trvs" path="res://scenes/basic_enemy.tscn" id="12_c2yap"]
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_684b2")
 tile_tip = ExtResource("2_x31wm")
 tile_straight = ExtResource("2_ufdrw")
 tile_crossroads = ExtResource("4_rda0d")
-tile_enemy = ExtResource("5_sm8n6")
 tile_corner = ExtResource("3_eclpv")
 tile_empty = Array[PackedScene]([ExtResource("2_0c4nn"), ExtResource("2_0c4nn"), ExtResource("2_0c4nn"), ExtResource("8_tg2ur"), ExtResource("9_p6rmo"), ExtResource("10_0wrr2"), ExtResource("11_g0xd7")])
+basic_enemy = ExtResource("12_c2yap")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.173648, 0.984808, 0, -0.984808, 0.173648, 7.5, 5, 6)

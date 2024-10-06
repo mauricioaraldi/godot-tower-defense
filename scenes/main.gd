@@ -3,9 +3,10 @@ extends Node3D
 @export var tile_tip:PackedScene
 @export var tile_straight:PackedScene
 @export var tile_crossroads:PackedScene
-@export var tile_enemy:PackedScene
 @export var tile_corner:PackedScene
 @export var tile_empty:Array[PackedScene]
+
+@export var basic_enemy:PackedScene
 
 const BASIC_PATH_CONFIG:PathGeneratorConfig = preload("res://resources/basic_path_config.res")
 
@@ -18,27 +19,10 @@ func _ready():
 	_pop_along_grid()
 
 func _pop_along_grid():
-	var box = tile_enemy.instantiate()
-
-	var c3d:Curve3D = Curve3D.new()
-
-	for element in PathGenInstance.get_path_route():
-		c3d.add_point(Vector3(element.x, 0.4, element.y))
-
-	var p3d:Path3D = Path3D.new()
-	add_child(p3d)
-	p3d.curve = c3d
-
-	var pf3d:PathFollow3D = PathFollow3D.new()
-	p3d.add_child(pf3d)
-	pf3d.add_child(box)
-
-	var curr_distance:float = 0.0
-
-	while curr_distance < c3d.point_count-1:
-		curr_distance += 0.02
-		pf3d.progress = clamp(curr_distance, 0, c3d.point_count-1.00001)
-		await get_tree().create_timer(0.01).timeout
+	for i in 20:
+		await get_tree().create_timer(2).timeout
+		var box = basic_enemy.instantiate()
+		add_child(box)
 
 func _complete_grid():
 	for x in range(BASIC_PATH_CONFIG.map_length):
