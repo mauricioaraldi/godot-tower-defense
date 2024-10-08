@@ -14,7 +14,8 @@ func _init() -> void:
 		or _loop_count < BASIC_PATH_CONFIG.min_loops or _loop_count > BASIC_PATH_CONFIG.max_loops
 	):
 		generate_path(BASIC_PATH_CONFIG.has_to_add_loops)
-	
+
+
 func generate_path(add_loops:bool = false) -> Array[Vector2i]:
 	_path_route.clear()
 
@@ -43,20 +44,22 @@ func generate_path(add_loops:bool = false) -> Array[Vector2i]:
 
 	return _path_route
 
+
 func _add_loops() -> void:
 	var has_to_add_loops:bool = true
 	
 	while has_to_add_loops:
 		has_to_add_loops = false
-		
+
 		for i in range(_path_route.size()):
 			var loop:Array[Vector2i] = _is_loop_option(i)
-			
+
 			if loop.size() > 0:
 				has_to_add_loops = true
 
 				for j in range(loop.size()):
 					_path_route.insert(i + 1 + j, loop[j])
+
 
 func _is_loop_option(index:int) -> Array[Vector2i]:
 	var x:int = _path_route[index].x
@@ -118,20 +121,25 @@ func _is_loop_option(index:int) -> Array[Vector2i]:
 		
 	return return_path
 
+
 # Returns true if there is a path tile at the x, y coordinate.
 func _tile_loc_taken(x: int, y: int) -> bool:
 	return _path_route.has(Vector2i(x, y))
-	
+
+
 # Returns true if there is no path tile at the x, y coordinate.
 func _tile_loc_free(x: int, y: int) -> bool:
 	return not _path_route.has(Vector2i(x, y))
+
 
 # Returns the number of loops currently in the path.
 func get_loop_count() -> int:
 	return _loop_count
 
+
 func get_path_tile(index:int) -> Vector2i:
 	return _path_route[index]
+
 
 #		1
 #	8		2
@@ -147,6 +155,7 @@ func get_tile_score(index:int) -> int:
 	score += 8 if _path_route.has(Vector2i(x - 1, y)) else 0
 	
 	return score
+
 
 func get_path_route() -> Array[Vector2i]:
 	return _path_route

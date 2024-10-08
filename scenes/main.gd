@@ -8,6 +8,9 @@ extends Node3D
 
 @export var basic_enemy:PackedScene
 
+@onready var cam = $Camera3D
+var RAYCAST_LENGTH:float = 100
+
 const BASIC_PATH_CONFIG:PathGeneratorConfig = preload("res://resources/basic_path_config.res")
 
 # Called when the node enters the scene tree for the first time.
@@ -18,11 +21,13 @@ func _ready():
 
 	_pop_along_grid()
 
+
 func _pop_along_grid():
 	for i in 20:
 		await get_tree().create_timer(2).timeout
 		var box = basic_enemy.instantiate()
 		add_child(box)
+
 
 func _complete_grid():
 	for x in range(BASIC_PATH_CONFIG.map_length):
@@ -34,12 +39,12 @@ func _complete_grid():
 
 				tile.global_position = Vector3(x, 0, y)
 				tile.global_rotation_degrees = Vector3(0, randi_range(0, 3) * 90 , 0)
-				
+
 	for i in range(PathGenInstance.get_path_route().size()):
 		var tile_score:int = PathGenInstance.get_tile_score(i)
 		var tile:Node3D = tile_empty[0].instantiate()
 		var tile_rotation:Vector3 = Vector3.ZERO
-		
+
 		if tile_score == 2:
 			tile = tile_tip.instantiate()
 			tile_rotation = Vector3(0, 90, 0)
@@ -69,10 +74,6 @@ func _complete_grid():
 			tile_rotation = Vector3(0, 0, 0)
 
 		add_child(tile)
-		
+
 		tile.global_position = Vector3(PathGenInstance.get_path_tile(i).x, 0, PathGenInstance.get_path_tile(i).y)
 		tile.global_rotation_degrees = tile_rotation
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta: float) -> void:
-	#pass

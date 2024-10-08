@@ -1,0 +1,15 @@
+[gd_scene load_steps=4 format=3 uid="uid://boivd5vmcgvk7"]
+
+[ext_resource type="PackedScene" uid="uid://di147021dsbhy" path="res://assets/tower-round-base.glb" id="1_1mdpx"]
+[ext_resource type="PackedScene" uid="uid://cs30tgutn3hfx" path="res://assets/tower-round-middle-a.glb" id="2_547yo"]
+[ext_resource type="PackedScene" uid="uid://cf6xym8d3msvg" path="res://assets/tower-round-roof-a.glb" id="3_jwlcm"]
+
+[node name="Tower_1" type="Node3D"]
+
+[node name="tower-round-base2" parent="." instance=ExtResource("1_1mdpx")]
+
+[node name="tower-round-middle-a2" parent="." instance=ExtResource("2_547yo")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
+
+[node name="tower-round-roof-a2" parent="." instance=ExtResource("3_jwlcm")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)

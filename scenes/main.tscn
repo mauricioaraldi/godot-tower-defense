@@ -1,24 +1,27 @@
-[gd_scene load_steps=12 format=3 uid="uid://bgo78njd10bse"]
+[gd_scene load_steps=15 format=3 uid="uid://bgo78njd10bse"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_684b2"]
-[ext_resource type="PackedScene" uid="uid://b4ywl4w8ct8fs" path="res://assets/tile.glb" id="2_0c4nn"]
-[ext_resource type="PackedScene" uid="uid://dfdwwjb25k0rc" path="res://assets/tile-straight.glb" id="2_ufdrw"]
-[ext_resource type="PackedScene" uid="uid://dxafv2hcdn3i7" path="res://assets/tile-spawn-end-round.glb" id="2_x31wm"]
-[ext_resource type="PackedScene" uid="uid://dfc0tsgea8lhe" path="res://assets/tile-corner-round.glb" id="3_eclpv"]
-[ext_resource type="PackedScene" uid="uid://2u853t6kxsqk" path="res://assets/tile-crossing.glb" id="4_rda0d"]
-[ext_resource type="PackedScene" uid="uid://b4iq3f6pefsfp" path="res://assets/tile-tree-double.glb" id="8_tg2ur"]
-[ext_resource type="PackedScene" uid="uid://opqt14irmbh0" path="res://assets/tile-tree.glb" id="9_p6rmo"]
-[ext_resource type="PackedScene" uid="uid://dvf6iyhoq6hl7" path="res://assets/tile-rock.glb" id="10_0wrr2"]
-[ext_resource type="PackedScene" uid="uid://cxovhgrb0vi75" path="res://assets/tile-crystal.glb" id="11_g0xd7"]
+[ext_resource type="PackedScene" uid="uid://d04w5y2jy4v7l" path="res://scenes/TileSpawnEndRound.tscn" id="2_rwnn3"]
+[ext_resource type="PackedScene" uid="uid://bqwd8furoimi1" path="res://scenes/TileStraight.tscn" id="3_txihp"]
+[ext_resource type="PackedScene" uid="uid://dool2u61vcoeu" path="res://scenes/TileCrossing.tscn" id="4_irtdu"]
+[ext_resource type="PackedScene" uid="uid://d04l35ob5k6kw" path="res://scenes/TileCornerRound.tscn" id="5_s3aif"]
+[ext_resource type="PackedScene" uid="uid://bkq6f18feslg0" path="res://scenes/Tile.tscn" id="6_h8m7e"]
+[ext_resource type="PackedScene" uid="uid://bpwboibryolq8" path="res://scenes/TileTreeDouble.tscn" id="7_globs"]
+[ext_resource type="PackedScene" uid="uid://dtts8unvrwwva" path="res://scenes/TileTree.tscn" id="8_xg5eb"]
+[ext_resource type="PackedScene" uid="uid://c70lgorptxrge" path="res://scenes/TileRock.tscn" id="9_rreyd"]
+[ext_resource type="PackedScene" uid="uid://byvjmdykh6wom" path="res://scenes/TileCrystal.tscn" id="10_ok8bx"]
 [ext_resource type="PackedScene" uid="uid://dytvgccj1trvs" path="res://scenes/basic_enemy.tscn" id="12_c2yap"]
+[ext_resource type="PackedScene" uid="uid://b564hfx81v2vu" path="res://scenes/deployable_button.tscn" id="12_tgpdv"]
+[ext_resource type="Texture2D" uid="uid://dtq4c4qnrvdag" path="res://images/icon_tower_1.png" id="13_2s25c"]
+[ext_resource type="PackedScene" uid="uid://boivd5vmcgvk7" path="res://scenes/tower_1.tscn" id="14_hb018"]
 
 [node name="Node3D" type="Node3D"]
 script = ExtResource("1_684b2")
-tile_tip = ExtResource("2_x31wm")
-tile_straight = ExtResource("2_ufdrw")
-tile_crossroads = ExtResource("4_rda0d")
-tile_corner = ExtResource("3_eclpv")
-tile_empty = Array[PackedScene]([ExtResource("2_0c4nn"), ExtResource("2_0c4nn"), ExtResource("2_0c4nn"), ExtResource("8_tg2ur"), ExtResource("9_p6rmo"), ExtResource("10_0wrr2"), ExtResource("11_g0xd7")])
+tile_tip = ExtResource("2_rwnn3")
+tile_straight = ExtResource("3_txihp")
+tile_crossroads = ExtResource("4_irtdu")
+tile_corner = ExtResource("5_s3aif")
+tile_empty = Array[PackedScene]([ExtResource("6_h8m7e"), ExtResource("6_h8m7e"), ExtResource("6_h8m7e"), ExtResource("7_globs"), ExtResource("8_xg5eb"), ExtResource("9_rreyd"), ExtResource("10_ok8bx")])
 basic_enemy = ExtResource("12_c2yap")
 
 [node name="Camera3D" type="Camera3D" parent="."]
@@ -27,3 +30,13 @@ fov = 100.0
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 100, 0)
+
+[node name="HUD" type="Node" parent="."]
+
+[node name="Tower_1" parent="HUD" instance=ExtResource("12_tgpdv")]
+offset_left = 200.0
+offset_top = 550.0
+offset_right = 248.0
+offset_bottom = 598.0
+activity_button_icon = ExtResource("13_2s25c")
+button_draggable = ExtResource("14_hb018")

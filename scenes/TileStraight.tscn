@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://bqwd8furoimi1"]
+
+[ext_resource type="PackedScene" uid="uid://dfdwwjb25k0rc" path="res://assets/tile-straight.glb" id="1_ebc2h"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_olpmo"]
+
+[node name="TileStraight" type="Area3D" groups=["path"]]
+
+[node name="tile-straight" parent="." instance=ExtResource("1_ebc2h")]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.2, 0, 0, 0, 1, 0, 0.1, 0)
+shape = SubResource("BoxShape3D_olpmo")

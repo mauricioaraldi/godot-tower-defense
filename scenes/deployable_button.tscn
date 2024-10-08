@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://b564hfx81v2vu"]
+
+[ext_resource type="Script" path="res://deployable_button.gd" id="1_qb2nj"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_4vnu3"]
+
+[node name="deployable_button" type="Button"]
+clip_contents = true
+custom_minimum_size = Vector2(48, 48)
+offset_right = 8.0
+offset_bottom = 8.0
+theme_override_styles/focus = SubResource("StyleBoxEmpty_4vnu3")
+icon_alignment = 1
+script = ExtResource("1_qb2nj")
+
+[connection signal="button_down" from="." to="." method="_on_button_down"]
+[connection signal="button_up" from="." to="." method="_on_button_up"]
