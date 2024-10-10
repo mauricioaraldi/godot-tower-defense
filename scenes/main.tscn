@@ -1,6 +1,6 @@
 [gd_scene load_steps=15 format=3 uid="uid://bgo78njd10bse"]
 
-[ext_resource type="Script" path="res://scenes/main.gd" id="1_684b2"]
+[ext_resource type="Script" path="res://scripts/main.gd" id="1_684b2"]
 [ext_resource type="PackedScene" uid="uid://d04w5y2jy4v7l" path="res://scenes/TileSpawnEndRound.tscn" id="2_rwnn3"]
 [ext_resource type="PackedScene" uid="uid://bqwd8furoimi1" path="res://scenes/TileStraight.tscn" id="3_txihp"]
 [ext_resource type="PackedScene" uid="uid://dool2u61vcoeu" path="res://scenes/TileCrossing.tscn" id="4_irtdu"]

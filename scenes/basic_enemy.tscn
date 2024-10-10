@@ -1,11 +1,20 @@
-[gd_scene load_steps=10 format=3 uid="uid://dytvgccj1trvs"]
+[gd_scene load_steps=13 format=3 uid="uid://dytvgccj1trvs"]
 
 [ext_resource type="PackedScene" uid="uid://d0r2838jhsgjt" path="res://assets/enemy-ufo-a.glb" id="1_0mnlm"]
-[ext_resource type="Script" path="res://scenes/basic_enemy.gd" id="1_ohs3t"]
+[ext_resource type="Script" path="res://scripts/basic_enemy.gd" id="1_ohs3t"]
+[ext_resource type="Script" path="res://scripts/enemy_settings.gd" id="2_eijql"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="3_2v73y"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="4_7w1vt"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="5_hoq08"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="5_v05dn"]
+
+[sub_resource type="Resource" id="Resource_ff2j0"]
+script = ExtResource("2_eijql")
+speed = 3.0
+health = 100.0
+damage = 5.0
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_xkb6o"]
 
 [sub_resource type="Animation" id="Animation_2t45t"]
 resource_name = "despawn"
@@ -45,6 +54,7 @@ _data = {
 
 [node name="BasicEnemy" type="Node3D"]
 script = ExtResource("1_ohs3t")
+ENEMY_SETTINGS = SubResource("Resource_ff2j0")
 
 [node name="EnemyStateChart" type="Node" parent="."]
 script = ExtResource("3_2v73y")
@@ -65,10 +75,10 @@ delay_in_seconds = "0.0"
 [node name="Travelling" type="Node" parent="EnemyStateChart/CompoundState"]
 script = ExtResource("5_v05dn")
 
-[node name="ToDespawning" type="Node" parent="EnemyStateChart/CompoundState/Travelling"]
+[node name="ToDamagePlayer" type="Node" parent="EnemyStateChart/CompoundState/Travelling"]
 script = ExtResource("5_hoq08")
-to = NodePath("../../Despawning")
-event = &"to_despawning"
+to = NodePath("../../DamagePlayer")
+event = &"to_damage_player"
 delay_in_seconds = "0.0"
 
 [node name="Despawning" type="Node" parent="EnemyStateChart/CompoundState"]
@@ -77,13 +87,36 @@ script = ExtResource("5_v05dn")
 [node name="Dying" type="Node" parent="EnemyStateChart/CompoundState"]
 script = ExtResource("5_v05dn")
 
+[node name="ToDespawning" type="Node" parent="EnemyStateChart/CompoundState/Dying"]
+script = ExtResource("5_hoq08")
+to = NodePath("../../Despawning")
+event = &"to_despawning"
+delay_in_seconds = "0.0"
+
+[node name="DamagePlayer" type="Node" parent="EnemyStateChart/CompoundState"]
+script = ExtResource("5_v05dn")
+
+[node name="ToDespawning" type="Node" parent="EnemyStateChart/CompoundState/DamagePlayer"]
+script = ExtResource("5_hoq08")
+to = NodePath("../../Despawning")
+event = &"to_despawning"
+delay_in_seconds = "0.0"
+
 [node name="Path3D" type="Path3D" parent="."]
 
 [node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
 loop = false
 
 [node name="enemy-ufo-a2" parent="Path3D/PathFollow3D" instance=ExtResource("1_0mnlm")]
-transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0.25, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+
+[node name="CollisionArea" type="Area3D" parent="Path3D/PathFollow3D"]
+collision_layer = 2
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Path3D/PathFollow3D/CollisionArea"]
+transform = Transform3D(1, 0, 0, 0, 0.35, 0, 0, 0, 1, 0, 0.6, 0)
+shape = SubResource("CylinderShape3D_xkb6o")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -94,3 +127,5 @@ libraries = {
 [connection signal="state_entered" from="EnemyStateChart/CompoundState/Travelling" to="." method="_on_travelling_state_entered"]
 [connection signal="state_processing" from="EnemyStateChart/CompoundState/Travelling" to="." method="_on_travelling_state_processing"]
 [connection signal="state_entered" from="EnemyStateChart/CompoundState/Despawning" to="." method="_on_despawning_state_entered"]
+[connection signal="state_entered" from="EnemyStateChart/CompoundState/Dying" to="." method="_on_dying_state_entered"]
+[connection signal="state_entered" from="EnemyStateChart/CompoundState/DamagePlayer" to="." method="_on_damage_player_state_entered"]

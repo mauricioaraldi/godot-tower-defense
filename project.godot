@@ -30,3 +30,8 @@ grid_crystal=""
 grid_rock=""
 grid_tree=""
 grid_empty=""
+
+[layer_names]
+
+3d_physics/layer_1="Path"
+3d_physics/layer_2="Enemy"

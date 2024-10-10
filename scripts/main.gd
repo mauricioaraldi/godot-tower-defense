@@ -1,17 +1,17 @@
 extends Node3D
 
-@export var tile_tip:PackedScene
-@export var tile_straight:PackedScene
-@export var tile_crossroads:PackedScene
-@export var tile_corner:PackedScene
-@export var tile_empty:Array[PackedScene]
+@export var tile_tip: PackedScene
+@export var tile_straight: PackedScene
+@export var tile_crossroads: PackedScene
+@export var tile_corner: PackedScene
+@export var tile_empty: Array[PackedScene]
 
-@export var basic_enemy:PackedScene
+@export var basic_enemy: PackedScene
 
 @onready var cam = $Camera3D
-var RAYCAST_LENGTH:float = 100
+var RAYCAST_LENGTH: float = 100
 
-const BASIC_PATH_CONFIG:PathGeneratorConfig = preload("res://resources/basic_path_config.res")
+const BASIC_PATH_CONFIG: PathGeneratorConfig = preload("res://resources/basic_path_config.res")
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -33,7 +33,7 @@ func _complete_grid():
 	for x in range(BASIC_PATH_CONFIG.map_length):
 		for y in range(BASIC_PATH_CONFIG.map_height):
 			if not PathGenInstance.get_path_route().has(Vector2i(x, y)):
-				var tile:Node3D = tile_empty.pick_random().instantiate()
+				var tile: Node3D = tile_empty.pick_random().instantiate()
 
 				add_child(tile)
 
@@ -41,9 +41,9 @@ func _complete_grid():
 				tile.global_rotation_degrees = Vector3(0, randi_range(0, 3) * 90 , 0)
 
 	for i in range(PathGenInstance.get_path_route().size()):
-		var tile_score:int = PathGenInstance.get_tile_score(i)
-		var tile:Node3D = tile_empty[0].instantiate()
-		var tile_rotation:Vector3 = Vector3.ZERO
+		var tile_score: int = PathGenInstance.get_tile_score(i)
+		var tile: Node3D = tile_empty[0].instantiate()
+		var tile_rotation: Vector3 = Vector3.ZERO
 
 		if tile_score == 2:
 			tile = tile_tip.instantiate()
