@@ -8,6 +8,8 @@ extends Node3D
 
 @export var basic_enemy: PackedScene
 
+@export var money: int = 100
+
 @onready var cam = $Camera3D
 var RAYCAST_LENGTH: float = 100
 
@@ -20,6 +22,10 @@ func _ready():
 	await get_tree().create_timer(2).timeout
 
 	_pop_along_grid()
+	
+
+func _process(delta):
+	$HUD/Money.text = "Cash $%d" % money
 
 
 func _pop_along_grid():

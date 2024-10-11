@@ -2,7 +2,9 @@ extends Node3D
 
 @export var ENEMY_SETTINGS:EnemySettings
 
-var health:int
+@onready var main: Node3D = $"."
+
+var health: float
 
 var attackable:bool = false
 var distance_travelled:float = 0
@@ -13,11 +15,12 @@ var path_follow_3d:PathFollow3D
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	health = ENEMY_SETTINGS.health
+
 	$Path3D.curve = path_route_to_curve_3d()
 	$Path3D/PathFollow3D.progress = 0
 
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	if health < 0:
 		attackable = false
 		$EnemyStateChart.send_event("to_dying")
@@ -72,3 +75,5 @@ func _on_dying_state_entered() -> void:
 	$Path3D/PathFollow3D/Smoke.emitting = true
 
 	$EnemyStateChart.send_event("to_despawning")
+	
+	get_parent_node_3d().money += ENEMY_SETTINGS.reward
