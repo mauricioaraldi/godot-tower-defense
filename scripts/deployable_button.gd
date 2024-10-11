@@ -91,7 +91,7 @@ func clear_material_override(mesh_3d: MeshInstance3D):
 func _on_main_mouse_hit(tile: CollisionObject3D):
 	_draggable.visible = true
 	
-	if tile.get_groups()[0].begins_with("grid_empty"):
+	if tile.get_groups() and tile.get_groups()[0].begins_with("grid_empty"):
 		set_child_mesh_alphas(_draggable)
 		_draggable.global_position = Vector3(tile.global_position.x, 0.2, tile.global_position.z)
 		_last_valid_location = _draggable.global_position

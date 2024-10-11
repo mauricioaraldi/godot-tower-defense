@@ -1,0 +1,20 @@
+[gd_scene load_steps=4 format=3 uid="uid://bckb8qanyeuw1"]
+
+[ext_resource type="Script" path="res://scripts/projectile.gd" id="1_ts1yy"]
+[ext_resource type="PackedScene" uid="uid://4ic8fpk4yemf" path="res://assets/weapon-ammo-arrow.glb" id="1_tucs4"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pbobh"]
+
+[node name="Projectile" type="Area3D"]
+collision_layer = 4
+collision_mask = 2
+script = ExtResource("1_ts1yy")
+
+[node name="weapon-ammo-arrow2" parent="." instance=ExtResource("1_tucs4")]
+transform = Transform3D(0.999992, 0, 0.00392698, 0, 1, 0, -0.00392698, 0, 0.999992, 0, 0, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(0.2, 0, 0, 0, 0.2, 0, 0, 0, 0.8, 0, 0, 0)
+shape = SubResource("BoxShape3D_pbobh")
+
+[connection signal="area_entered" from="." to="." method="_on_area_entered"]

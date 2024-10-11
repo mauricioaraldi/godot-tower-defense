@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://dytvgccj1trvs"]
+[gd_scene load_steps=16 format=3 uid="uid://dytvgccj1trvs"]
 
 [ext_resource type="PackedScene" uid="uid://d0r2838jhsgjt" path="res://assets/enemy-ufo-a.glb" id="1_0mnlm"]
 [ext_resource type="Script" path="res://scripts/basic_enemy.gd" id="1_ohs3t"]
@@ -7,6 +7,9 @@
 [ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="4_7w1vt"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="5_hoq08"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="5_v05dn"]
+[ext_resource type="AudioStream" uid="uid://cckko3oyrdigb" path="res://sounds/ufo_down.wav" id="8_x7wd5"]
+[ext_resource type="PackedScene" uid="uid://dafdki6ow0c7k" path="res://scenes/explosion.tscn" id="9_s10kk"]
+[ext_resource type="PackedScene" uid="uid://1mfw1p02mhr0" path="res://scenes/smoke.tscn" id="10_sws38"]
 
 [sub_resource type="Resource" id="Resource_ff2j0"]
 script = ExtResource("2_eijql")
@@ -81,6 +84,12 @@ to = NodePath("../../DamagePlayer")
 event = &"to_damage_player"
 delay_in_seconds = "0.0"
 
+[node name="ToDying" type="Node" parent="EnemyStateChart/CompoundState/Travelling"]
+script = ExtResource("5_hoq08")
+to = NodePath("../../Dying")
+event = &"to_dying"
+delay_in_seconds = "0.0"
+
 [node name="Despawning" type="Node" parent="EnemyStateChart/CompoundState"]
 script = ExtResource("5_v05dn")
 
@@ -118,10 +127,18 @@ collision_mask = 0
 transform = Transform3D(1, 0, 0, 0, 0.35, 0, 0, 0, 1, 0, 0.6, 0)
 shape = SubResource("CylinderShape3D_xkb6o")
 
+[node name="Explosion" parent="Path3D/PathFollow3D" instance=ExtResource("9_s10kk")]
+
+[node name="Smoke" parent="Path3D/PathFollow3D" instance=ExtResource("10_sws38")]
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_ro022")
 }
+
+[node name="AudioDying" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("8_x7wd5")
+bus = &"FX"
 
 [connection signal="state_entered" from="EnemyStateChart/CompoundState/Spawning" to="." method="_on_spawning_state_entered"]
 [connection signal="state_entered" from="EnemyStateChart/CompoundState/Travelling" to="." method="_on_travelling_state_entered"]

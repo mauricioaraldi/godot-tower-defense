@@ -1,19 +1,22 @@
-[gd_scene load_steps=10 format=3 uid="uid://boivd5vmcgvk7"]
+[gd_scene load_steps=12 format=3 uid="uid://boivd5vmcgvk7"]
 
 [ext_resource type="PackedScene" uid="uid://di147021dsbhy" path="res://assets/tower-round-base.glb" id="1_1mdpx"]
 [ext_resource type="Script" path="res://scripts/tower_1.gd" id="1_wpp1r"]
 [ext_resource type="PackedScene" uid="uid://cs30tgutn3hfx" path="res://assets/tower-round-middle-a.glb" id="2_547yo"]
+[ext_resource type="PackedScene" uid="uid://bckb8qanyeuw1" path="res://scenes/projectile.tscn" id="2_oh78m"]
 [ext_resource type="PackedScene" uid="uid://cf6xym8d3msvg" path="res://assets/tower-round-roof-a.glb" id="3_jwlcm"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="5_m83ol"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="6_gaftw"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="7_gx3eq"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="8_y2nnw"]
+[ext_resource type="AudioStream" uid="uid://b8nyjb36aieoe" path="res://sounds/arrow.wav" id="10_xp6cs"]
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_mt5qw"]
 radius = 2.0
 
 [node name="Tower_1" type="Node3D"]
 script = ExtResource("1_wpp1r")
+projectile_type = ExtResource("2_oh78m")
 
 [node name="base" parent="." instance=ExtResource("1_1mdpx")]
 
@@ -22,6 +25,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.2, 0)
 
 [node name="roof" parent="." instance=ExtResource("3_jwlcm")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.8, 0)
+
+[node name="projectile_spawn" type="Node3D" parent="roof"]
 
 [node name="PatrolZone" type="Area3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -71,8 +76,13 @@ to = NodePath("../../AttackingState")
 event = &"to_attacking"
 delay_in_seconds = "0.0"
 
+[node name="AudioShoot" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("10_xp6cs")
+bus = &"FX"
+
 [connection signal="area_entered" from="PatrolZone" to="." method="_on_patrol_zone_area_entered"]
 [connection signal="area_exited" from="PatrolZone" to="." method="_on_patrol_zone_area_exited"]
+[connection signal="state_entered" from="StateChart/CompoundState/AttackingState" to="." method="_on_attacking_state_state_entered"]
 [connection signal="state_physics_processing" from="StateChart/CompoundState/AttackingState" to="." method="_on_attacking_state_state_physics_processing"]
 [connection signal="state_processing" from="StateChart/CompoundState/PatrollingState" to="." method="_on_patrolling_state_state_processing"]
 [connection signal="state_entered" from="StateChart/CompoundState/AcquiringState" to="." method="_on_acquiring_state_state_entered"]
